@@ -2,6 +2,7 @@ FROM debian:12-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
+ENV USER=root
 
 RUN apt update && apt install -y \
     xfce4 xfce4-terminal \
@@ -9,6 +10,8 @@ RUN apt update && apt install -y \
     dbus-x11 \
     firefox-esr \
     wget curl \
+    git \
+    python3 \
     ca-certificates \
     xz-utils \
     && apt clean && rm -rf /var/lib/apt/lists/*
@@ -26,7 +29,6 @@ RUN mkdir -p /root/.vnc && \
     echo '#!/bin/sh\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\nexec dbus-launch xfce4-session &' > /root/.vnc/xstartup && \
     chmod +x /root/.vnc/xstartup
 
-# Startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
